@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+<div class="col-md-3">
+<div class="jumbotron ">
+
+  <h4>{{instance.profile.fullname}}</h4>
+  {% if instance.profile.avatar %}
+    <img src = "{{instance.profile.avatar.url}}" width="180" height="180" class = "img-thumbnail" /><br/><br/>
+  {% endif %}
+  Bio : {{instance.profile.bio}}<br/>
+  Location : {{instance.profile.location}}<br/>
+  DOB : {{instance.profile.birth_date}}<br/>
+
+</div>
+
+</div>
+
+<div class="col-md-9">
+
+<div class="jumbotron ">
+  <h3>Board</h3>
+
+  {% for post in posts %}
+  {{post.postcontent}} <br/>
+  {{post.timestamp}} <br/>
+  {% endfor %}
+
+
+</div>
+</div>
+
+</div>
+
+
+
+
+
+{% endblock %}
