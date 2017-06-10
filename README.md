@@ -1,2 +1,2 @@
-# ridersinn
-A social network platform for Motorcyclists 
+# Ridersinn
+A python Django based social network platform for Motorcyclists 
