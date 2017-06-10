@@ -22,7 +22,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'userprofile:profile' %}">Logo</a>
+      {% if user.username %}
+      <a class="navbar-brand" href="{% url 'userprofile:profile' %}"><img src="{% static "img/logo.jpg" %}"/></a>
+      {% else %}
+      <a class="navbar-brand" href="{% url 'login' %}"><img src="{% static "img/logo.jpg" %}"/></a>
+      {% endif %}
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

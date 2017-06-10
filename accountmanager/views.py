@@ -26,7 +26,7 @@ def userSignup(request):
             user.save()
             current_site = get_current_site(request)
             subject = 'Activate Your MySite Account'
-            message = render_to_string('account_activation_email.html', {
+            message = render_to_string('accountmanager/account_activation_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -36,7 +36,7 @@ def userSignup(request):
             return redirect('account_activation_sent')
     else:
         form = UserForm()
-    return render(request,'signup.html',{'form':form})
+    return render(request,'accountmanager/signup.html',{'form':form})
 
 def account_activation_sent(request):
     return HttpResponse("Email Send")
@@ -50,7 +50,7 @@ def changePassword(request):
             form.save()
             update_session_auth_hash(request, form.user)
             return redirect('userprofile:profile')
-    return render(request,'changepassword.html',{'form':form})
+    return render(request,'accountmanager/changepassword.html',{'form':form})
 
 def activate(request,uidb64,token):
     try:

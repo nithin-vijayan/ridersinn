@@ -10,7 +10,7 @@ from . import views
 urlpatterns = [
 
     url(r'^signup/', views.userSignup, name="signup"),
-    url(r'^login/', auth_views.login , {'template_name': 'login.html'}, name="login"),
+    url(r'^login/', auth_views.login , {'template_name': 'accountmanager/login.html'}, name="login"),
     url(r'^logout/', auth_views.logout, {'next_page':'login'} , name="logout"),
     url(r'^change/', views.changePassword, name="change"),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

@@ -13,16 +13,23 @@ def editprofile(request):
     if pform.is_valid():
         instance=pform.save(commit=False)
         instance.save()
-        return redirect('editprofile.html')
-    return render(request, 'editprofile.html', {'form': pform})
+        return redirect('userprofile/editprofile.html')
+    return render(request, 'userprofile/editprofile.html', {'form': pform})
 
 
 def profile(request,username=None):
-    instance=get_object_or_404(User, username= (username or request.user.username))
-    posts=Post.objects.filter(user=instance)
-    return render(request, 'profile.html', {'instance': instance, 'posts':posts})
+    if username:
+        instance=get_object_or_404(User, username= (username or request.user.username))
+        posts=Post.objects.filter(user=instance).order_by('-timestamp')
+    else:
+        instance=get_object_or_404(User, username= (username or request.user.username))
+        posts=Post.objects.all().order_by('-timestamp')
+    return render(request, 'userprofile/profile.html', {'instance': instance, 'posts':posts})
 
-def board(request,username):
-    user=User.objects.get(username=username)
-    posts=Post.objects.filter(user=user)
-    return render(request, 'board.html', {'posts': posts})
+@login_required
+def posts(request):
+    print request.POST
+    user=User.objects.get(username=request.user.username)
+    post=Post.objects.create(user=user,postcontent=request.POST['post'])
+    post.save()
+    return redirect(user.profile)
