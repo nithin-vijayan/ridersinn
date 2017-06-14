@@ -1,0 +1,95 @@
+{% load static %}
+
+<head>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="{% static "bootstrap/js/jquery.min.js" %}" ></script>
+  <script src="{% static "bootstrap/js/bootstrap.min.js" %}" ></script>
+  <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" >
+
+  <!-- Optional theme -->
+
+  <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap-theme.min.css" %}" >
+  <link rel="stylesheet" href="{% static "css/mdb.min.css" %}" >
+  <link rel="stylesheet" href="{% static "css/custom.css" %}" >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+</head>
+
+<div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      {% if user.username %}
+      <a class="navbar-brand" href="{% url 'userprofile:profile' %}">Brand</a>
+      {% else %}
+      <a class="navbar-brand" href="{% url 'login' %}">Brand</a>
+      {% endif %}
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!--
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+    -->
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.username %}
+        <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" title="My connections"><i class="fa fa-users fa-2x" aria-hidden="true"></i><span class="label label-info">7</span>
+        </a>
+          <ul class="dropdown-menu">
+              <li><a href="javascript:;"><img src="/media/15493648_1131923426856433_8762678601917609941_o.jpg" height="30px" width="30px" class="circle-avatar img-circle"> Nithin</a></li>
+              <li><a href="javascript:;"><img src="/media/15493648_1131923426856433_8762678601917609941_o.jpg" height="30px" width="30px" class="circle-avatar img-circle"> Lorem</a></li>
+              <li><a href="javascript:;"><img src="/media/15493648_1131923426856433_8762678601917609941_o.jpg" height="30px" width="30px" class="circle-avatar img-circle"> Ipsum</a></li>
+              <li class="divider"></li>
+              <li><a href="javascript:;" class="text-center">View All</a></li>
+          </ul>
+        </li>
+        <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" title="Messages"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i><span class="label label-info">32</span>
+        </a>
+          <ul class="dropdown-menu">
+              <li><a href="javascript:;"><span class="label label-warning">4:00 AM</span>Favourites Snippet</a></li>
+              <li><a href="javascript:;"><span class="label label-warning">4:30 AM</span>Email marketing</a></li>
+              <li><a href="javascript:;"><span class="label label-warning">5:00 AM</span>Subscriber focused email
+                  design</a></li>
+              <li class="divider"></li>
+              <li><a href="javascript:;" class="text-center">View All</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <img src = "{{instance.profile.avatar.url}}"  height="30px" width="30px" class="circle-avatar img-circle"></img>
+            </a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'userprofile:edit' %}">Edit Profile</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li><a href="{% url 'signup' %}">Register</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div>
+<body>
+{% block content %}
+
+{% endblock %}
+</body>

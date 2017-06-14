@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Profile</h2>
+  <form enctype="multipart/form-data" method="post">
+    <br/>
+    {% if user.profile.avatar %}
+      <img src = "{{user.profile.avatar.url}}" width="180" height="180"/>
+    {% endif %}
+    <br/>
+    username : {{user.username}} <br/>
+    email : {{user.email}}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}
