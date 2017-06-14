@@ -16,7 +16,7 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        return reverse('userprofile.views.profile', args=[str(self.user.username)])
+        return reverse('userprofile:profile', args=[str(self.user.username)])
 
 class Post(models.Model):
     user= models.ForeignKey(User,on_delete=models.CASCADE)
