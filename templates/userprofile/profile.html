@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static%}
+{% block content %}
+<div class="profilebody">
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-3 cprofile">
+         <img class="center-block" src = "{{instance.profile.avatar.url}}" width="200" height="200"  /><br/><br/>
+         <text-divider><span>Basic information</span></text-divider>
+         <p>Developer, Loves to ride, been to all southern states of India on motorcycle</p>
+         <table>
+            <tr>
+               <td><i class="fa fa-venus-mars fa-lg" aria-hidden="true"></i></td>
+               <td>Male</td>
+            </tr>
+            <tr>
+               <td><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> </td>
+               <td>India</td>
+            </tr>
+            <tr>
+               <td><i class="fa fa-birthday-cake fa-lg" aria-hidden="true"></i> </td>
+               <td>30/06/1993</td>
+            </tr>
+            <tr>
+               <td><i class="fa fa-motorcycle fa-lg" aria-hidden="true"></i> </td>
+               <td>RoyalEnfield</td>
+            </tr>
+            <tr>
+               <td><i class="fa fa-road fa-lg" aria-hidden="true"></i> </td>
+               <td>35K Miles</td>
+            </tr>
+         </table>
+      </div>
+      <div class="col-md-6 cprofile">
+         <h2>Nithin K</h2>
+         <h4>Profession</h4>
+         <button type="button" class="btn btn-circle btn-primary fa fa-user-plus fa-lg" title="Request to connect"></button>
+         <button type="button" class="btn btn-circle btn-primary fa fa-paper-plane fa-lg" title="Send message" id ="modalbutton"></button>
+         <div class="modal fade" id="messagemodal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	         <form  id="mass" 	>
+	            <div class="modal-dialog" >
+	               <div class="modal-content">
+	                  <div class="modal-header">
+	                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                     <span aria-hidden="true">&times;</span>
+	                     </button>
+	                     <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+	                  </div>
+	                  <div class="modal-body">
+	                     <span>Recipient : User</span>
+	                     {% csrf_token %}
+	                     {{postform.as_p}}
+	                  </div>
+	                  <div class="modal-footer">
+	                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	                     <button class="btn btn-primary" type="submit"  >Send</button>
+	                  </div>
+	               </div>
+	            </div>
+	         </form>
+         </div>
+
+         <span class="icon-user-plus"></span>
+         <!-- Nav tabs -->
+         <ul class="nav nav-tabs md-pills pills-ins" role="tablist">
+            <li class="nav-item">
+               <a class="nav-link" data-toggle="tab" href="#about" role="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> About</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Timeline</a>
+            </li>
+         </ul>
+         <!-- Tab panels -->
+         <div class="tab-content">
+            <!--Panel 1-->
+            <div class="tab-pane fade" id="timeline" role="tabpanel">
+               <br>
+               {% for post in posts %}
+               <div class="well">
+                  <a href="{{ post.user.profile.get_absolute_url }}"> {{post.user.username}}</a> <br/>
+                  {{post.postcontent}} <br/>
+                  <small>{{post.timestamp|naturaltime}}({{post.timestamp|naturaltime}})</small> <br/>
+               </div>
+               {% endfor %}
+            </div>
+            <!--/.Panel 1-->
+            <!--Panel 2-->
+            <div class="tab-pane fade in show active" id="about" role="tabpanel">
+               <br>
+               Gender : Male<br/>
+               Bio : {{instance.profile.bio}}<br/>
+               Location : {{instance.profile.location}}<br/>
+               DOB : {{instance.profile.birth_date}}<br/>
+            </div>
+            <!--/.Panel 2-->
+         </div>
+      </div>
+      <div class="col-md-3 cprofile">
+        <ul class="list-inline">
+         <li><h3>Events</h3></li>
+         <li><button type="button" class="btn btn-circle event-button btn-sm  btn-primary" title="Request to connect"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></button></li>
+       </ul>
+         <text-divider></text-divider>
+         <div class="row">
+            <div class="col-lg-6 cprofile">
+               <div class="container thumb">
+                  <img src="{% static 'img/ridermania.jpg' %}" height=100 width=100  alt="Avatar" class="image">
+                  <div class="overlay">
+                     <div class="text">Ridermania Event</div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-6 cprofile">
+               <div class="container thumb">
+                  <img src="{% static 'img/ridermania.jpg' %}" height=100 width=100  alt="Avatar" class="image">
+                  <div class="overlay">
+                     <div class="text">Event Name</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}
