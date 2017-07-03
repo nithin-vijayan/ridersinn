@@ -15,3 +15,4 @@ class Event(models.Model):
 class EventMembership(models.Model):
     user= models.ForeignKey(User,on_delete=models.CASCADE)
     event = models.ForeignKey(Event,on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=False,auto_now_add=True)

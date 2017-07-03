@@ -1,116 +1,61 @@
+$(document).ready(function() {
 
+	bootstrap_alert = function() {}
+	bootstrap_alert.warning = function(message) {
+	            $('#successalert').html('<div class="alert alert-success alert-dismissable fade in"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+	        }
 
-$("#mass").on("submit", ".js-book-create-form", function (e) {
-		e.preventDefault();
-    var form = $(this);
+					$("#add").click(function () {
+						var btn = $(this);
+						$.ajax({
+							url: btn.attr("data-url"),
+							type: 'get',
+							dataType: 'json',
+							beforeSend: function () {
+								$("#messagemodal").modal("show");
+							},
+							success: function (data) {
+								$("#chat-modal").html(data.html_form);
+							}
+						});
+					});
+
+	$("#modalbutton").click(function () {
+    var btn = $(this);
+		var data={'touser':$("#modalbutton").attr("touser")}
     $.ajax({
-      url: form.attr("action"),
-      data: form.serialize(),
-      type: form.attr("method"),
+      url: btn.attr("data-url"),
+      type: 'get',
+			data:data,
       dataType: 'json',
+      beforeSend: function () {
+        $("#messagemodal").modal("show");
+      },
       success: function (data) {
-        if (data.form_is_valid) {
-          alert("Book created!");  // <-- This is just a placeholder for now for testing
-        }
+        $("#chat-modal").html(data.html_form);
       }
     });
-    return false;
   });
 
 
-.panel-login {
-	border-color: #ccc;
-	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-	box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-}
-.panel-login>.panel-heading {
-	color: #00415d;
-	background-color: #fff;
-	border-color: #fff;
-	text-align:center;
-}
-.panel-login>.panel-heading a{
-	text-decoration: none;
-	color: #666;
-	font-weight: bold;
-	font-size: 15px;
-	-webkit-transition: all 0.1s linear;
-	-moz-transition: all 0.1s linear;
-	transition: all 0.1s linear;
-}
-.panel-login>.panel-heading a.active{
-	color: #029f5b;
-	font-size: 18px;
-}
-.panel-login>.panel-heading hr{
-	margin-top: 10px;
-	margin-bottom: 0px;
-	clear: both;
-	border: 0;
-	height: 1px;
-	background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
-	background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-	background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-	background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-}
-.panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
-	height: 45px;
-	border: 1px solid #ddd;
-	font-size: 16px;
-	-webkit-transition: all 0.1s linear;
-	-moz-transition: all 0.1s linear;
-	transition: all 0.1s linear;
-}
-.panel-login input:hover,
-.panel-login input:focus {
-	outline:none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	border-color: #ccc;
-}
-.btn-login {
-	background-color: #59B2E0;
-	outline: none;
-	color: #fff;
-	font-size: 14px;
-	height: auto;
-	font-weight: normal;
-	padding: 14px 0;
-	text-transform: uppercase;
-	border-color: #59B2E6;
-}
-.btn-login:hover,
-.btn-login:focus {
-	color: #fff;
-	background-color: #53A3CD;
-	border-color: #53A3CD;
-}
-.forgot-password {
-	text-decoration: underline;
-	color: #888;
-}
-.forgot-password:hover,
-.forgot-password:focus {
-	text-decoration: underline;
-	color: #666;
-}
+$("#messagemodal").on('submit', function(e) {
+	e.preventDefault()
+	console.log("form submitted!")  // sanity check
+	var formData = $("#mass").serializeArray()
+	$.ajax({
+		url: "/profile/message",
+		data: formData,
+		type: 'post',
+		dataType: 'json',
+		success: function (data) {
+			if (data.form_is_valid) {
+				$("#messagemodal").modal('hide');
+				bootstrap_alert.warning("Message Sent !");
 
-.btn-register {
-	background-color: #1CB94E;
-	outline: none;
-	color: #fff;
-	font-size: 14px;
-	height: auto;
-	font-weight: normal;
-	padding: 14px 0;
-	text-transform: uppercase;
-	border-color: #1CB94A;
-}
-.btn-register:hover,
-.btn-register:focus {
-	color: #fff;
-	background-color: #1CA347;
-	border-color: #1CA347;
-}
+
+			}
+
+		}
+	});
+});
+});

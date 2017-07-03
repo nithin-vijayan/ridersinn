@@ -3,6 +3,8 @@
 {% load static%}
 {% block content %}
 <div class="profilebody">
+  <div id="successalert">
+  </div>
 <div class="container-fluid">
    <div class="row">
       <div class="col-md-3 cprofile">
@@ -35,31 +37,40 @@
       <div class="col-md-6 cprofile">
          <h2>Nithin K</h2>
          <h4>Profession</h4>
-         <button type="button" class="btn btn-circle btn-primary fa fa-user-plus fa-lg" title="Request to connect"></button>
-         <button type="button" class="btn btn-circle btn-primary fa fa-paper-plane fa-lg" title="Send message" id ="modalbutton"></button>
-         <div class="modal fade" id="messagemodal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	         <form  id="mass" 	>
+         {% if ishomepage %}
+         <div></div>
+         {% else %}
+         <button type="button" class="btn btn-circle btn-primary fa fa-user-plus fa-lg" title="Request to connect"  data-toggle="modal" data-target="#myModal"></button>
+         <button type="button" class="btn btn-circle btn-primary fa fa-paper-plane fa-lg" title="Send message" id ="modalbutton" data-url="{% url 'userprofile:message' %}" touser="{{instance}}"></button>
+         <div class="modal fade" id="messagemodal">
 	            <div class="modal-dialog" >
-	               <div class="modal-content">
-	                  <div class="modal-header">
-	                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                     <span aria-hidden="true">&times;</span>
-	                     </button>
-	                     <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
-	                  </div>
-	                  <div class="modal-body">
-	                     <span>Recipient : User</span>
-	                     {% csrf_token %}
-	                     {{postform.as_p}}
-	                  </div>
-	                  <div class="modal-footer">
-	                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                     <button class="btn btn-primary" type="submit"  >Send</button>
-	                  </div>
+	               <div class="modal-content" id="chat-modal">
+
 	               </div>
 	            </div>
-	         </form>
          </div>
+
+         <div id="myModal" class="modal fade" role="dialog">
+           <div class="modal-dialog modal-sm">
+             <div class="modal-content">
+               <form id="friendform">
+                 <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   <h4 class="modal-title">Connect to User?</h4>
+                 </div>
+                 <div class="modal-body">
+                   <p>Send Connection Request ?</p>
+                 </div>
+                 <div class="modal-footer">
+                    {% csrf_token %}
+                    <input type="hidden" value={{instance.username}} name="touser"/>
+                    <button type="submit" class="btn btn-default" >Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                  </div>
+                </form>
+              </div>
+           </div>
+        </div>
 
          <span class="icon-user-plus"></span>
          <!-- Nav tabs -->
@@ -95,6 +106,7 @@
             </div>
             <!--/.Panel 2-->
          </div>
+         {% endif %}
       </div>
       <div class="col-md-3 cprofile">
         <ul class="list-inline">
